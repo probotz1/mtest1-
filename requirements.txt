@@ -1,0 +1,2 @@
+pyrogram==2.0.106
+ffmpeg-python==0.2.0
