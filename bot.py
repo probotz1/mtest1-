@@ -12,7 +12,7 @@ from ffmpeg import merge_video_with_audio
 # Configuration
 api_id = '28015531'
 api_hash = '2ab4ba37fd5d9ebf1353328fc915ad28'
-bot_token = '7096504091:AAFREKtbG4OCjyCQkOL0Pb_7x9KveR--xRA'
+bot_token = '7218885939:AAE-IXkH5XG_pF5GNV41MvFRqW3LWwqeaOw'
 bot = Client('video_audio_merger_bot', api_id=api_id, api_hash=api_hash, bot_token=bot_token)
 
 # Path to save files temporarily
