@@ -4,12 +4,13 @@
 
 import logging
 import math
-import os
 import time
-
 from pyrogram.errors.exceptions import FloodWait
 from pyrogram import Client
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
+
+# Import constants from __init__.py
+from __init__ import FINISHED_PROGRESS_STR, UN_FINISHED_PROGRESS_STR, EDIT_SLEEP_TIME_OUT, gDict, LOGGER
 
 logging.basicConfig(
     level=logging.DEBUG, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
@@ -50,7 +51,7 @@ class Progress:
             ]
         )
         if self.is_cancelled:
-            logger.info("stopping")
+            LOGGER.info("stopping")
             await self._mess.edit(
                 f"⛔ **Cancelled** ⛔ \n\n `{ud_type}` ({humanbytes(total)})"
             )
