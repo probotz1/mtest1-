@@ -10,9 +10,9 @@ from display_progress import Progress, humanbytes
 from ffmpeg import merge_video_with_audio
 
 # Configuration
-api_id = '28015531'
-api_hash = '2ab4ba37fd5d9ebf1353328fc915ad28'
-bot_token = '7096504091:AAFREKtbG4OCjyCQkOL0Pb_7x9KveR--xRA'
+api_id = 'YOUR_API_ID'
+api_hash = 'YOUR_API_HASH'
+bot_token = 'YOUR_BOT_TOKEN'
 bot = Client('video_audio_merger_bot', api_id=api_id, api_hash=api_hash, bot_token=bot_token)
 
 # Path to save files temporarily
@@ -20,6 +20,9 @@ DOWNLOAD_PATH = 'downloads/'
 
 if not os.path.exists(DOWNLOAD_PATH):
     os.makedirs(DOWNLOAD_PATH)
+
+# Dictionary to store the paths of the video files temporarily
+user_data = {}
 
 @bot.on_message(filters.command('start'))
 async def start(bot: Client, message: Message):
@@ -44,18 +47,19 @@ async def video_handler(bot: Client, message: Message):
     )
     await message.reply("Video downloaded. Now send me an audio file.")
 
-    # Store the video path in the message context for the next step
-    message.video_path = video_path
+    # Store the video path in the user_data for the current user
+    user_data[message.from_user.id] = {'video_path': video_path}
 
 @bot.on_message(filters.audio)
 async def audio_handler(bot: Client, message: Message):
     audio_file = message.audio
-    video_path = message.video_path
+    user_id = message.from_user.id
 
-    if not video_path:
+    if user_id not in user_data or 'video_path' not in user_data[user_id]:
         await message.reply("Please send a video file first.")
         return
 
+    video_path = user_data[user_id]['video_path']
     audio_path = os.path.join(DOWNLOAD_PATH, f"{message.audio.file_id}.mp3")
     output_path = os.path.join(DOWNLOAD_PATH, f"output_{message.video.file_id}.mp4")
 
@@ -95,6 +99,9 @@ async def audio_handler(bot: Client, message: Message):
     os.remove(video_path)
     os.remove(audio_path)
     os.remove(output_path)
+
+    # Clear user data
+    del user_data[user_id]
 
 if __name__ == "__main__":
     bot.run()
