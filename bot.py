@@ -10,9 +10,9 @@ from display_progress import Progress, humanbytes
 from ffmpeg import merge_video_with_audio
 
 # Configuration
-api_id = 'YOUR_API_ID'
-api_hash = 'YOUR_API_HASH'
-bot_token = 'YOUR_BOT_TOKEN'
+api_id = '28015531'
+api_hash = '2ab4ba37fd5d9ebf1353328fc915ad28'
+bot_token = '7096504091:AAFREKtbG4OCjyCQkOL0Pb_7x9KveR--xRA'
 bot = Client('video_audio_merger_bot', api_id=api_id, api_hash=api_hash, bot_token=bot_token)
 
 # Path to save files temporarily
